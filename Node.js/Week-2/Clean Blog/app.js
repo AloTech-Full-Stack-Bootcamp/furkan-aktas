@@ -7,13 +7,23 @@ const postController = require("./controller/postController");
 const pageController = require("./controller/pageController");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // mongodb connection
-mongoose.connect("mongodb://localhost/clean-blog", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose
+    .connect(
+        "mongodb+srv://furkan:eO3kZlW1jgupDD50@cleanblog.nolzi.mongodb.net/clean-blog?retryWrites=true&w=majority",
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        }
+    )
+    .then(() => {
+        console.log("Database Connected.");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 // template engine
 app.set("view engine", "ejs");
