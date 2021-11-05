@@ -1,3 +1,4 @@
+//  required modules
 const express = require("express");
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
@@ -9,7 +10,7 @@ const pageController = require("./controller/pageController");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// mongodb connection
+// mongodb connection (atlas)
 mongoose
     .connect(
         "mongodb+srv://furkan:eO3kZlW1jgupDD50@cleanblog.nolzi.mongodb.net/clean-blog?retryWrites=true&w=majority",
@@ -33,13 +34,13 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method", { methods: ["POST", "GET"] }));
-// middleware
+// show request middleware
 app.use(function (req, res, next) {
     console.log("Request:", req.path);
     next();
 });
 
-// show all posts on main page
+// show all posts on main page - go to main page
 app.get("/", postController.getAllPosts);
 // show post detail
 app.get("/posts/:id", postController.getPost);
@@ -56,6 +57,7 @@ app.get("/add_post", pageController.getAddPostPage);
 // go to update detail of the post
 app.get("/posts/edit/:id", pageController.getEditPage);
 
+// start the server
 app.listen(PORT, () => {
     console.log(`Sunucu ${PORT} portunda çalışıyor.`);
 });
